@@ -21,12 +21,6 @@ import { Product } from './schemas/product.schema';
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
-  //   @Get()
-  //   //   @Redirect('https://google.com', 301)
-  //   getAll(@Req() req: Request, @Res() res: Response): string {
-  //     res.status(201).end('Poka');
-  //     return 'getAll';
-  //   }
 
   @Get()
   getAll(): Promise<Product[]> {

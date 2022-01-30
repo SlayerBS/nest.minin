@@ -16,6 +16,7 @@ import {
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductsService } from './products.service';
+import { Product } from './schemas/product.schema';
 
 @Controller('products')
 export class ProductsController {
@@ -28,12 +29,12 @@ export class ProductsController {
   //   }
 
   @Get()
-  getAll(): any {
+  getAll(): Promise<Product[]> {
     return this.productsService.getAll();
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string) {
+  getOne(@Param('id') id: string): Promise<Product> {
     return this.productsService.getById(id);
   }
 
@@ -46,11 +47,11 @@ export class ProductsController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return 'Remove' + id;
+    return this.productsService.remove(id);
   }
 
   @Put(':id')
   update(@Body() updateProductDto: UpdateProductDto, @Param('id') id: string) {
-    return 'Update' + id;
+    return this.productsService.update(id, updateProductDto);
   }
 }

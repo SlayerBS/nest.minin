@@ -15,10 +15,11 @@ import {
 } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Response, Request } from 'express';
+import { ProductsService } from './products.service';
 
 @Controller('products')
 export class ProductsController {
+  constructor(private readonly productsService: ProductsService) {}
   //   @Get()
   //   //   @Redirect('https://google.com', 301)
   //   getAll(@Req() req: Request, @Res() res: Response): string {
@@ -27,20 +28,20 @@ export class ProductsController {
   //   }
 
   @Get()
-  getAll(): string {
-    return 'getAll';
+  getAll(): any {
+    return this.productsService.getAll();
   }
 
   @Get(':id')
   getOne(@Param('id') id: string) {
-    return 'getOne' + id;
+    return this.productsService.getById(id);
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @Header('Cache-Control', 'none')
-  create(@Body() createPruductDto: CreateProductDto): string {
-    return `Title: ${createPruductDto.title}Price:${createPruductDto.price}`;
+  create(@Body() createPruductDto: CreateProductDto) {
+    return this.productsService.create(createPruductDto);
   }
 
   @Delete(':id')

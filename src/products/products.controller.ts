@@ -41,17 +41,20 @@ export class ProductsController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @Header('Cache-Control', 'none')
-  create(@Body() createPruductDto: CreateProductDto) {
+  create(@Body() createPruductDto: CreateProductDto): Promise<Product> {
     return this.productsService.create(createPruductDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string): Promise<Product> {
     return this.productsService.remove(id);
   }
 
   @Put(':id')
-  update(@Body() updateProductDto: UpdateProductDto, @Param('id') id: string) {
+  update(
+    @Body() updateProductDto: UpdateProductDto,
+    @Param('id') id: string,
+  ): Promise<Product> {
     return this.productsService.update(id, updateProductDto);
   }
 }
